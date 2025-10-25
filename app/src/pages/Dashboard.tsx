@@ -71,6 +71,7 @@ const Dashboard: React.FC = () => {
       color: 'text-danger-600',
       bgColor: 'bg-danger-50 dark:bg-danger-900/20',
       trend: stats.statusCounts.open > 0 ? 'up' : 'neutral',
+      link: '/issues?status=open',
     },
     {
       label: 'In Progress',
@@ -79,6 +80,7 @@ const Dashboard: React.FC = () => {
       color: 'text-warning-600',
       bgColor: 'bg-warning-50 dark:bg-warning-900/20',
       trend: 'neutral',
+      link: '/issues?status=in_progress',
     },
     {
       label: 'Resolved',
@@ -87,6 +89,7 @@ const Dashboard: React.FC = () => {
       color: 'text-success-600',
       bgColor: 'bg-success-50 dark:bg-success-900/20',
       trend: stats.statusCounts.resolved > 0 ? 'up' : 'neutral',
+      link: '/issues?status=resolved',
     },
   ];
 
@@ -97,6 +100,7 @@ const Dashboard: React.FC = () => {
       icon: XCircle,
       color: 'text-danger-600',
       bgColor: 'bg-danger-50 dark:bg-danger-900/20',
+      link: '/issues?severity=critical',
     },
     {
       label: 'Major',
@@ -104,6 +108,7 @@ const Dashboard: React.FC = () => {
       icon: AlertTriangle,
       color: 'text-warning-600',
       bgColor: 'bg-warning-50 dark:bg-warning-900/20',
+      link: '/issues?severity=major',
     },
     {
       label: 'Minor',
@@ -111,6 +116,7 @@ const Dashboard: React.FC = () => {
       icon: Activity,
       color: 'text-primary-600',
       bgColor: 'bg-primary-50 dark:bg-primary-900/20',
+      link: '/issues?severity=minor',
     },
   ];
 
@@ -152,7 +158,11 @@ const Dashboard: React.FC = () => {
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {statusCards.map((card) => (
-            <div key={card.label} className="card p-6">
+            <Link
+              key={card.label}
+              to={card.link}
+              className="card p-6 hover:shadow-lg transition-shadow cursor-pointer"
+            >
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <p className="text-sm text-gray-500 dark:text-gray-400">{card.label}</p>
@@ -181,7 +191,7 @@ const Dashboard: React.FC = () => {
                   <card.icon className={cn('h-5 w-5', card.color)} />
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
@@ -193,7 +203,11 @@ const Dashboard: React.FC = () => {
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {severityCards.map((card) => (
-            <div key={card.label} className="card p-6">
+            <Link
+              key={card.label}
+              to={card.link}
+              className="card p-6 hover:shadow-lg transition-shadow cursor-pointer"
+            >
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <p className="text-sm text-gray-500 dark:text-gray-400">{card.label}</p>
@@ -227,7 +241,7 @@ const Dashboard: React.FC = () => {
                   <card.icon className={cn('h-5 w-5', card.color)} />
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

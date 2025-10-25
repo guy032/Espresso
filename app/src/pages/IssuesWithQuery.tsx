@@ -1,5 +1,5 @@
-import React, { useState, useMemo, Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useMemo, Fragment, useEffect } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import {
   Search,
@@ -45,20 +45,30 @@ interface Filters {
 
 const IssuesWithQuery: React.FC = () => {
   const queryClient = useQueryClient();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [viewMode, setViewMode] = useState<'grid' | 'table'>(
     (localStorage.getItem('issuesViewMode') as 'grid' | 'table') || 'table'
   );
 
-  const [filters, setFilters] = useState<Filters>({
-    search: '',
-    status: '',
-    severity: '',
-    site: '',
-    sort: 'createdAt',
-    order: 'desc',
-  });
+  // Get filters from URL params
+  const filters = useMemo<Filters>(
+    () => ({
+      search: searchParams.get('search') || '',
+      status: searchParams.get('status') || '',
+      severity: searchParams.get('severity') || '',
+      site: searchParams.get('site') || '',
+      sort: (searchParams.get('sort') || 'createdAt') as string,
+      order: (searchParams.get('order') || 'desc') as 'asc' | 'desc',
+    }),
+    [searchParams]
+  );
 
-  const [searchInput, setSearchInput] = useState('');
+  const [searchInput, setSearchInput] = useState(filters.search);
+
+  // Update search input when URL changes
+  useEffect(() => {
+    setSearchInput(filters.search);
+  }, [filters.search]);
 
   // Build base params for the API query (without page)
   const baseParams = {
@@ -138,9 +148,15 @@ const IssuesWithQuery: React.FC = () => {
   const debouncedSearch = useMemo(
     () =>
       debounce((value: string) => {
-        setFilters((prev) => ({ ...prev, search: value }));
+        const newParams = new URLSearchParams(searchParams);
+        if (value) {
+          newParams.set('search', value);
+        } else {
+          newParams.delete('search');
+        }
+        setSearchParams(newParams);
       }, 300),
-    []
+    [searchParams, setSearchParams]
   );
 
   // Handle search input
@@ -152,28 +168,29 @@ const IssuesWithQuery: React.FC = () => {
 
   // Handle filter changes
   const handleFilterChange = (key: keyof Filters, value: string) => {
-    setFilters((prev) => ({ ...prev, [key]: value }));
+    const newParams = new URLSearchParams(searchParams);
+    if (value && value !== '') {
+      newParams.set(key, value);
+    } else {
+      newParams.delete(key);
+    }
+    setSearchParams(newParams);
   };
 
   // Handle sorting
   const handleSort = (field: string) => {
-    setFilters((prev) => ({
-      ...prev,
-      sort: field,
-      order: prev.sort === field && prev.order === 'desc' ? 'asc' : 'desc',
-    }));
+    const newParams = new URLSearchParams(searchParams);
+    const currentSort = filters.sort;
+    const currentOrder = filters.order;
+
+    newParams.set('sort', field);
+    newParams.set('order', currentSort === field && currentOrder === 'desc' ? 'asc' : 'desc');
+    setSearchParams(newParams);
   };
 
   // Clear filters
   const clearFilters = () => {
-    setFilters({
-      search: '',
-      status: '',
-      severity: '',
-      site: '',
-      sort: 'createdAt',
-      order: 'desc',
-    });
+    setSearchParams(new URLSearchParams());
     setSearchInput('');
   };
 
@@ -309,7 +326,10 @@ const IssuesWithQuery: React.FC = () => {
             <div className="flex gap-1">
               <button
                 type="button"
-                onClick={() => setViewMode('table')}
+                onClick={() => {
+                  setViewMode('table');
+                  localStorage.setItem('issuesViewMode', 'table');
+                }}
                 className={cn(
                   'p-2 rounded-lg',
                   viewMode === 'table'
@@ -321,7 +341,10 @@ const IssuesWithQuery: React.FC = () => {
               </button>
               <button
                 type="button"
-                onClick={() => setViewMode('grid')}
+                onClick={() => {
+                  setViewMode('grid');
+                  localStorage.setItem('issuesViewMode', 'grid');
+                }}
                 className={cn(
                   'p-2 rounded-lg',
                   viewMode === 'grid'
