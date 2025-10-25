@@ -1,0 +1,14 @@
+# AWS Configuration
+aws_region = "us-east-1"
+
+# Environment
+environment = "production"
+
+# Database Configuration
+db_username = "admin"
+db_password = "YourSecurePassword123!"  # Change this!
+
+# GitHub Configuration (optional - for auto-deploy)
+# github_token = "ghp_your_github_personal_access_token"
+# github_repo  = "https://github.com/yourusername/trial-issues-tracker"
+# github_branch = "main"

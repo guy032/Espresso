@@ -1,0 +1,34 @@
+{
+  "eslint.workingDirectories": [
+    {
+      "directory": "./api",
+      "changeProcessCWD": true
+    }
+  ],
+  "typescript.tsdk": "./api/node_modules/typescript/lib",
+  "typescript.tsserver.enableTracing": false,
+  "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "eslint.options": {
+    "overrideConfigFile": "./api/.eslintrc.json"
+  },
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/coverage": true,
+    "**/.git": true,
+    "**/.DS_Store": true
+  },
+  "jest.jestCommandLine": "npm test --",
+  "jest.rootPath": "./api"
+}

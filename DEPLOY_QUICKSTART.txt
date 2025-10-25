@@ -1,0 +1,19 @@
+# AWS Deployment Setup
+
+## 🚀 Quick Start
+
+1. Copy the example environment file:
+   cp .env.aws.example .env.aws
+
+2. Edit .env.aws with your AWS credentials:
+   - AWS_ACCESS_KEY_ID=your_actual_key
+   - AWS_SECRET_ACCESS_KEY=your_actual_secret
+   - TF_VAR_db_password=YourSecurePassword123!
+
+3. Deploy to AWS:
+   npm run deploy
+
+That's it! Your app will be live on AWS in about 10 minutes.
+
+## ������ Full Guide
+See README_DEPLOY_AWS.md for detailed instructions.

@@ -1,0 +1,19 @@
+{
+  "name": "Espresso - Trial Issues Tracker",
+  "short_name": "Trial Issues",
+  "description": "Track and manage clinical trial site visit issues",
+  "theme_color": "#2563eb",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/logo.ico",
+      "sizes": "any",
+      "type": "image/ico"
+    }
+  ],
+  "categories": ["medical", "productivity", "business"]
+}

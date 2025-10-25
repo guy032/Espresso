@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["node", "jest", "express"],
+    "noUnusedLocals": false,
+    "noUnusedParameters": false
+  },
+  "include": ["tests/**/*", "src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
