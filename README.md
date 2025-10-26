@@ -1,3 +1,8 @@
+<img width="1276" height="867" alt="image" src="https://github.com/user-attachments/assets/e7bb0416-0531-478d-9aa2-57a0e2e5dd5a" />
+<img width="1272" height="909" alt="image" src="https://github.com/user-attachments/assets/faf7af45-7418-4adf-8b1c-5773447299e2" />
+<img width="1274" height="944" alt="image" src="https://github.com/user-attachments/assets/601b7b3b-f2e9-470d-b3dc-4f088c526f10" />
+
+
 # Trial Issues Tracker
 
 Full-stack application for tracking clinical trial issues. Built with TypeScript, React, Express, and PostgreSQL.
